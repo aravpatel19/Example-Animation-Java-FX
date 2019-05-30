@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.scene.canvas.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.*;
@@ -15,6 +16,9 @@ import javafx.geometry.Rectangle2D;
 import javafx.event.*;
 import javafx.scene.input.*;
 import javafx.scene.text.*;
+import javafx.scene.SnapshotParameters;
+import javafx.geometry.Insets;
+import javafx.scene.layout.StackPane;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -72,7 +76,12 @@ public class Example extends Application implements EventHandler<InputEvent>{
 	public class AnimateObjects extends AnimationTimer{
 		public void handle(long now){
 			if(x>=50){
-				gc.drawImage(trooper, 180+x, 100);
+				ImageView trooper1 = new ImageView(trooper);
+				trooper1.setRotate(x);
+				SnapshotParameters params = new SnapshotParameters();
+				params.setFill(Color.TRANSPARENT);
+				Image rotatedImage = trooper1.snapshot(params, null);
+				gc.drawImage(rotatedImage, 0, 0);
 			}
 			else{
 				gc.setFill(Color.YELLOW);
